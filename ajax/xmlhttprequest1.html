@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>XMLHttpRequest 1</title>
+</head>
+<body>
+        <header class="cabecalho">
+            <h1>Recebendo dados do servidor em JSON</h1>
+            <h2>Estados</h2>
+        </header>
+        
+            <script>
+                // Recebendo informações do servidor 
+                function ajax (config) {
+                    const xhr = new XMLHttpRequest()
+                    xhr.open(config.metodo, config.url, true)
+                    xhr.onload = e => {
+                        if (xhr.status === 200) {
+                            config.sucesso(xhr.response)
+                        } else if (xhr.status >= 400) {
+                            config.erro({
+                                codigo: xhr.status,
+                                texo: xhr.statusText
+                            })
+                        }
+                    }
+                    xhr.send()
+                }
+                ajax({
+                    url: "dados/estados.json",
+                    metodo: "GET",
+                    sucesso(resposta) {
+                        const estados = JSON.parse(resposta)
+                        const linhas = estados.map(estado => {
+                            //Criando as células da tabela
+                            const tdId = document.createElement('td')
+                            tdId.innerHTML = estado.id
+                            const tdNome = document.createElement('td')
+                            tdNome.innerHTML = estado.nome
+                            const tdSigla = document.createElement('td')
+                            tdSigla.innerHTML = estado.sigla
+                            //Criando a linha da tabela
+                            const tr = document.createElement('tr')
+                            tr.appendChild(tdId)
+                            tr.appendChild(tdNome)
+                            tr.appendChild(tdSigla)
+                            return tr
+                        })
+                        const tabela = document.createElement('table')
+                        // Adicionando todas as linhas da tabela
+                        linhas.forEach(linha => tabela.appendChild(linha))
+                        // Adicionando a tabela no body
+                        document.body.appendChild(tabela)
+                    }, 
+                    // Adicionando a função de erro
+                    erro(e) {
+                        const msg = document.createTextNode(`${e.codigo}: ${e.texto}`)
+                        document.body.appendChild(msg)
+                    }
+                })
+            </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+{
+    "tarefas": [
+        {
+            "id": 1,
+            "nome": "Criar um serviço REST para a API do projeto",
+            "categoria_id": 1
+        },
+        {
+            "id": 2,
+            "nome": "Consumir o serviço REST criado na tela nova da aplicação mobile do projeto",
+            "categoria_id": 2
+        },
+        {
+            "id": 3,
+            "nome": "Divulgar a API para que mais pessoas possam consumir os serviços da API e popular os dados",
+            "categoria_id": 3
+        }
+    ],
+    "Categorias": [
+        {
+            "id": 1,
+            "nome": "Backend"
+        },
+        {
+            "id": 2,
+            "nome": "Frontend"
+        },
+        {
+            "id": 3,
+            "nome": "Empreendedorismo"
+        }
+    ]
+}

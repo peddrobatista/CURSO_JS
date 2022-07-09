@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>XML AJAX</title>
+</head>
+<body>
+    <h2>The XMLHttpRequest Object</h2>
+    <button type="button" onclick="loadDoc()">Get my CD collection</button>
+    <br><br>
+    <table id="demo"></table>
+    <script>
+      //Carregando dados xml de um servidor 
+        function loadDoc() {
+          //criando um objeto XMLHttpRequest
+          const xhttp = new XMLHttpRequest();
+          // definindo uma função de retorno 
+          xhttp.onload = function() {
+            myFunction(this);
+          }
+          //Enviando uma solicitação para o servidor 
+          xhttp.open("GET", "cd_catalog.xml");
+          xhttp.send();
+        }
+        function myFunction(xml) {
+          const xmlDoc = xml.responseXML;
+          const x = xmlDoc.getElementsByTagName("CD");
+          let table="<tr><th>Artist</th><th>Title</th></tr>";
+          for (let i = 0; i <x.length; i++) { 
+            table += "<tr><td>" +
+            x[i].getElementsByTagName("ARTIST")[0].childNodes[0].nodeValue +
+            "</td><td>" +
+            x[i].getElementsByTagName("TITLE")[0].childNodes[0].nodeValue +
+            "</td></tr>";
+          }
+          document.getElementById("demo").innerHTML = table;
+        }
+    </script>
+</body>
+</html>

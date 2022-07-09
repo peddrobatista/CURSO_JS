@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Fetch API 2</title>
+</head>
+<body>
+    <h1></h1>
+    <h2>Formulário via fetch</h2>
+    <form action="formulario" name="usuarioForm" method="post">
+        <input type="text" name="nome" placeholder="Nome..."/>
+        <input type="text" name="sobrenome" placeholder="Sobrenome..."/>
+        <button>Salvar</button>
+    </form>
+    <div id="resultado"></div>
+    <script>
+        document.usuarioForm.onsubmit = async e => {
+            e.preventDefault()
+            const form = e.target
+            const data = new FormData(form)
+            data.append('ajax', true)
+            const options = {
+                method: form.method,
+                body: new URLSearchParams(data)
+            }
+            fetch(form.action, options)
+            .then(resp => resp.json())
+            .then(json => {
+                const resultado = document.getElementById('resultado')
+                resultado.innerHTML = JSON.stringify(json)
+            })
+            // Tratando o erro caso ocorra
+            .catch(e => {
+                const resultado = document.getElementById('resultado')
+            })
+        }
+    </script>
+</body>
+</html>
